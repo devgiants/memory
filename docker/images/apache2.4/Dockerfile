@@ -3,7 +3,6 @@ FROM ubuntu:16.04
 MAINTAINER Nicolas BONNIOT <nicolas@devgiants.fr>
 
 ARG UID
-ARG PROJECT_NAME
 
 RUN apt-get update && apt-get install -y apache2
 
@@ -22,6 +21,6 @@ EXPOSE 80
 
 RUN usermod -u ${UID} www-data
 
-WORKDIR /var/www/html/${PROJECT}/
+WORKDIR /var/www/html
 
 CMD /usr/sbin/apache2ctl -D FOREGROUND

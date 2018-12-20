@@ -3,12 +3,17 @@ include .env
 export $(shell sed 's/=.*//' .env)
 
 bash-php: up
-	docker-compose exec -u $(u) php bash
+	docker-compose exec -u www-data php bash
 
-install: up
-	docker-compose exec -u www-data php composer create-project symfony/website-skeleton ${PROJECT_NAME} 4
+bash-php-root: up
+	docker-compose exec php bash
 
-database-create: up
+install: build
+	docker-compose exec -u www-data php composer install
+	docker-compose exec -u www-data php yarn config set global-folder ${YARN_GLOBAL_FOLDER}
+	docker-compose exec -u www-data php yarn config set cache-folder ${YARN_CACHE_FOLDER}
+	docker-compose exec -u www-data php yarn install
+	docker-compose exec -u www-data php yarn encore production
 
 up:
 	docker-compose up -d
