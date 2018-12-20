@@ -16,4 +16,28 @@ namespace Memory;
 class Card
 {
 
+    /**
+     * @var string the card name
+     */
+    protected $name;
+
+    /**
+     * Card constructor.
+     *
+     * @param string $name the card name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Retirn the card name
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }
