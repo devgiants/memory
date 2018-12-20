@@ -15,6 +15,15 @@ install: build
 	docker-compose exec -u www-data php yarn install
 	docker-compose exec -u www-data php yarn encore production
 
+encore-dev: up
+	docker-compose exec -u www-data php yarn encore dev
+
+encore-prod: up
+	docker-compose exec -u www-data php yarn encore prod
+
+encore-watch: up
+	docker-compose exec -u www-data php yarn encore dev --watch
+
 up:
 	docker-compose up -d
 
