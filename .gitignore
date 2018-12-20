@@ -1,0 +1,6 @@
+.idea
+docker/data
+docker/logs/*
+!docker/logs/.gitkeep
+.composer
+.yarn
