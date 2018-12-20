@@ -5,6 +5,25 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
+    available_cards:
+        - red-apple
+        - yellow-cherries
+        - mango
+        - raspberry
+        - red-cherries
+        - orange-pear
+        - purple-peach
+        - watermelon
+        - grape
+        - peach
+        - green-apple
+        - strawberry
+        - lemon
+        - peach-2
+        - passion-fruit
+        - green-lemon
+        - apricot
+        - bananas
 
 services:
     # default configuration for services in *this* file

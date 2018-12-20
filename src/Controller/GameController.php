@@ -8,22 +8,33 @@
 
 namespace App\Controller;
 
-
+use Memory\CardFlusher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class GameController
  *
  * @package App\Controller
+ * @author Nicolas BONNIOT <nicolas@devgiants.fr<
  */
 class GameController extends AbstractController
 {
+
     /**
+     * Allow to start a new game
+     *
+     * @return Response
      * @Route("/new-game", name="app_new_game")
      */
-    public function newGame()
+    public function newGame(): Response
     {
-        return $this->render('@App/game/game.html.twig');
+        $cardsFlusher = new CardFlusher($this->getParameter('available_cards'));
+
+        return $this->render(
+            '@App/game/game.html.twig',
+            ['cards' => $cardsFlusher->flush()]
+        );
     }
 }

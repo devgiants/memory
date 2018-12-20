@@ -2,6 +2,7 @@
   width: $card-side;
   height: $card-side;
   perspective: 1000px;
+  margin: $grid-gutter-width/2;
 
   &:hover {
     cursor: pointer;

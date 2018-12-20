@@ -1,11 +1,11 @@
 {% extends "@App/base.html.twig" %}
 {% block content %}
-    <div class="d-flex align-content-between justify-content-between col-12">
+    <div class="d-flex flex-wrap align-content-between justify-content-between col-12">
         {% for card in cards %}
             <div class="memory-card">
                 <div class="inner">
                     <div class="front"></div>
-                    <div class="back passion-fruit"></div>
+                    <div class="back {{ card.name }}"></div>
                 </div>
             </div>
         {% endfor %}
