@@ -1,0 +1,105 @@
+.memory-card {
+  width: $card-side;
+  height: $card-side;
+  perspective: 1000px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  /* This container is needed to position the front and back side */
+  .inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+
+  /* Position the front and back side */
+  .front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 5px;
+    border: 5px solid gray;
+  }
+
+  /* Style the front side (fallback if image is missing) */
+  .front {
+    background: transparent url(../images/logo-oclock.svg) center center;
+    background-size: contain;
+  }
+
+  /* Style the back side */
+  .back {
+    background-color: transparent;
+    background-image: url(../images/cards.png);
+    background-position-x: center;
+    transform: rotateY(180deg);
+
+    &.red-apple {
+      @include card-background-position(0);
+    }
+    &.yellow-cherries {
+      @include card-background-position(1);
+    }
+    &.mango {
+      @include card-background-position(2);
+    }
+    &.raspberry {
+      @include card-background-position(3);
+    }
+    &.red-cherries {
+      @include card-background-position(4);
+    }
+    &.orange-pear {
+      @include card-background-position(5);
+    }
+    &.purple-peach {
+      @include card-background-position(6);
+    }
+    &.watermelon {
+      @include card-background-position(7);
+    }
+    &.grape {
+      @include card-background-position(8);
+    }
+    &.peach {
+      @include card-background-position(9);
+    }
+    &.green-apple {
+      @include card-background-position(10);
+    }
+    &.strawberry {
+      @include card-background-position(11);
+    }
+    &.lemon {
+      @include card-background-position(12);
+    }
+    &.peach-2 {
+      @include card-background-position(13);
+    }
+    &.passion-fruit {
+      @include card-background-position(14);
+    }
+    &.green-lemon {
+      @include card-background-position(15);
+    }
+    &.apricot {
+      @include card-background-position(16);
+    }
+    &.bananas {
+      @include card-background-position(17);
+    }
+  }
+
+  /* Do an horizontal flip when you move the mouse over the flip box container */
+  &.flipped {
+    .inner {
+      transform: rotateY(180deg);
+    }
+  }
+}

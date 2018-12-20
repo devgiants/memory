@@ -1,0 +1,11 @@
+body {
+  #memory-cards {
+    .memory-card{
+      background: transparent url(../images/logo-oclock.svg);
+    }
+
+    &.flipped {
+
+    }
+  }
+}

@@ -1,0 +1,7 @@
+// the ~ allows to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+@import "variables";
+@import "mixins";
+@import "global";
+@import "game";

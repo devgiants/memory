@@ -6,7 +6,7 @@
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.scss');
+require('../scss/app.scss');
 
 const imagesContext = require.context('../images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
@@ -14,7 +14,12 @@ imagesContext.keys().forEach(imagesContext);
 // Use jQuery
 var $ = require('jquery');
 
+// Require Bootstrap
+require('bootstrap');
 
-$(function(){
-   // alert('test');
+$(function () {
+  $('.memory-card').click(function(e){
+    e.preventDefault();
+    $(this).toggleClass('flipped');
+  })
 });
