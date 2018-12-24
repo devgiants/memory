@@ -5,7 +5,6 @@ $(function () {
 
     // Only for game page
     if ($('body').hasClass('game')) {
-
         // Define needed vars
         let $firstCard, $secondCard;
 
@@ -48,9 +47,6 @@ $(function () {
                     // Finish game
                     $( document ).trigger( "gameFinished", ['win']);
                 }
-
-                // Both case are treated. Re-enable click handling
-                $('.memory-card').bind('click', clickHandler);
             }
         };
 
@@ -75,15 +71,10 @@ $(function () {
 
                 $(this).addClass(['flipped', 'iteration']);
 
-                // Temporarily disable click handling to avoid unnecessary processes, as we need to compute a result before accept other flips.
-                $('.memory-card').unbind('click', clickHandler);
-
                 console.log('second card chosen.')
             }
-
             // TODO send insight to server for history
         };
-
         // On every memory card click.
         $('.memory-card').bind('click', clickHandler);
     }
