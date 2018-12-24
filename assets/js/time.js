@@ -22,7 +22,7 @@ $(function () {
         /**
          * Callback handling process at each interval due
          */
-        function countDownStepHandler() {
+        let countDownStepHandler = function() {
             counter--;
 
             console.log('Current time : ' + counter + 's');
@@ -52,15 +52,15 @@ $(function () {
             if (counter === 0) {
                 $( document ).trigger( "gameFinished", ['loose']);
             }
-        }
+        };
 
         /**
          * Callback handling what to do when countdown finished
          */
-        function countDownEndHandler() {
+        let countDownEndHandler = function() {
             // Stop countdown
             clearInterval(intervalId);
-        }
+        };
 
         // Start interval loop
         intervalId = setInterval(countDownStepHandler, 1000);
