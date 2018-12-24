@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Memory\GameStatuses;
 use Ramsey\Uuid\UuidInterface;
 
 
@@ -31,10 +32,37 @@ class Game
     protected $id;
 
     /**
+     * @var string game status
+     *
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $status = GameStatuses::IN_PROGRESS;
+
+    /**
      * @return \Ramsey\Uuid\UuidInterface
      */
     public function getId() : ?UuidInterface
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return Game
+     */
+    public function setStatus(string $status): Game
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }
