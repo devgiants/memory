@@ -30,7 +30,7 @@ $(function () {
 
             // Find relative length for progress bar
             let length = parseInt(counter * 100 / maximumTime);
-            console.log('Calculated length for progress bar : ' + length + 's');
+            console.log('Calculated length for progress bar : ' + length + '%');
 
             if(length < ORANGE) {
                 progressBarClass = 'bg-danger';
@@ -58,8 +58,8 @@ $(function () {
          * Callback handling what to do when countdown finished
          */
         function countDownEndHandler() {
+            // Stop countdown
             clearInterval(intervalId);
-            // Finish game
         }
 
         // Start interval loop

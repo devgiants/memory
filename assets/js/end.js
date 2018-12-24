@@ -19,9 +19,10 @@ $(function () {
                     modalText = "Vous avez perdu... Pourquoi ne pas réessayer?"
                     break;
             }
+
             $('#end-game-modal')
-                .find('.modal-body p').text(modalText)
                 .modal('show')
+                .find('.modal-body p').text(modalText)
             ;
         });
     }

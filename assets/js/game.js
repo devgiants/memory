@@ -76,7 +76,7 @@ $(function () {
                     // TODO send insight to server for history
 
                     // Finish game
-                    $( document ).trigger( "gameFinished", {status: 'win'});
+                    $( document ).trigger( "gameFinished", ['win']);
                 }
 
                 // Both case are treated. Re-enable click handling
