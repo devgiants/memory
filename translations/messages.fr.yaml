@@ -1,3 +1,9 @@
 memory:
   landing:
     link: Jouer une nouvelle partie
+  game:
+    time:
+      title: Il vous reste...
+    modal:
+      title: Fin du jeu !
+      return: Nouvelle partie

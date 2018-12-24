@@ -35,7 +35,10 @@ class GameController extends AbstractController
 
         return $this->render(
             '@App/game/game.html.twig',
-            ['cards' => $cardsFlusher->shuffle()]
+            [
+                'cards' => $cardsFlusher->shuffle(),
+                'gameTime' => $this->getParameter('game_time')
+            ]
         );
     }
 }

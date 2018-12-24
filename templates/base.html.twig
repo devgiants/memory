@@ -24,7 +24,7 @@
              <link rel="stylesheet" href="/build/app.css"> -->
     {% endblock %}
 </head>
-<body>
+<body class="{% block body_classes %}{% endblock body_classes %}">
 <div class="container">
     {% block content %}{% endblock content %}
 

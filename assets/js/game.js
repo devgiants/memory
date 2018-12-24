@@ -2,78 +2,90 @@
 var $ = require('jquery');
 
 $(function () {
-    let $firstCard, $secondCard;
 
-    // Define click handler externally to make it unbindable
-    let clickHandler = function (e) {
-        e.preventDefault();
+    // Only for game page
+    if ($('body').hasClass('game')) {
 
-        // If no game iteration in progress
-        if (!$firstCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
-            $(this).addClass(['flipped', 'iteration']);
-            $firstCard = $(this);
-            console.log('first card chosen.')
-        }
+        // Define needed vars
+        let $firstCard, $secondCard;
 
-        // One card has already been flipped, this is the second shot (only if different unflipped card is clicked
-        else if (!$secondCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
+        // Define click handler (for click on any card) externally to make it unbindable
+        let clickHandler = function (e) {
+            e.preventDefault();
 
-            $secondCard = $(this);
-            // Bind choice logic for decision on transition end
-            $secondCard.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', transitionHandler);
-
-            $(this).addClass(['flipped', 'iteration']);
-
-            // Temporarily disable click handling to avoid unnecessary processes, as we need to compute a result before accept other flips.
-            $('.memory-card').unbind('click', clickHandler);
-
-            console.log('second card chosen.')
-        }
-
-        // TODO send insight to server for history
-    };
-
-    let transitionHandler = function () {
-        // If both cards are defined, we have to make a decision
-        if ($firstCard && $secondCard) {
-
-            // Remove transition handling to avoid concurrent triggers
-            $secondCard.off('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', transitionHandler);
-
-            // If .back classes are equals, both cards are the same.
-            if ($firstCard.find('.back').attr('class') === $secondCard.find('.back').attr('class')) {
-                $firstCard
-                    .removeClass('iteration')
-                    .addClass('found')
-                ;
-
-                $secondCard
-                    .removeClass('iteration')
-                    .addClass('found')
-                ;
-
-                // TODO send insight to server for history
+            // If no game iteration in progress, this is the first card of the iteration
+            if (!$firstCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
+                $(this).addClass(['flipped', 'iteration']);
+                $firstCard = $(this);
+                console.log('first card chosen.')
             }
 
-            // Cards are different. Flip them back.
-            else {
-                $firstCard.removeClass(['flipped', 'iteration']);
-                $secondCard.removeClass(['flipped', 'iteration']);
+            // One card has already been flipped, this is the second shot (only if different unflipped card is clicked)
+            else if (!$secondCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
+
+                $secondCard = $(this);
+
+                // Bind choice logic for decision on transition end fot this card
+                $secondCard.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', transitionHandler);
+
+                $(this).addClass(['flipped', 'iteration']);
+
+                // Temporarily disable click handling to avoid unnecessary processes, as we need to compute a result before accept other flips.
+                $('.memory-card').unbind('click', clickHandler);
+
+                console.log('second card chosen.')
             }
 
-            // Reset cards for next game iteration
-            $firstCard = $secondCard = null;
+            // TODO send insight to server for history
+        };
 
-            // Check game end
-            if ($('.memory-card:not(.flipped)').length === 0) {
-                alert('You won !!');
+        // Define transition handler, this is here the decision is made
+        let transitionHandler = function () {
+            // If both cards are defined, we have to make a decision
+            if ($firstCard && $secondCard) {
+
+                // Remove transition handling to avoid concurrent triggers
+                $secondCard.off('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', transitionHandler);
+
+                // If .back classes are equals, both cards are the same. They are found and will stay flipped.
+                if ($firstCard.find('.back').attr('class') === $secondCard.find('.back').attr('class')) {
+                    $firstCard
+                        .removeClass('iteration')
+                        .addClass('found')
+                    ;
+
+                    $secondCard
+                        .removeClass('iteration')
+                        .addClass('found')
+                    ;
+
+                    // TODO send insight to server for history
+                }
+
+                // Cards are different. Flip them back, this iteration is lost
+                else {
+                    $firstCard.removeClass(['flipped', 'iteration']);
+                    $secondCard.removeClass(['flipped', 'iteration']);
+                }
+
+                // Reset cards for next game iteration
+                $firstCard = $secondCard = null;
+
+                // Check game end
+                if ($('.memory-card:not(.flipped)').length === 0) {
+                    // TODO send insight to server for history
+
+                    // Finish game
+                    $( document ).trigger( "gameFinished", {status: 'win'});
+                }
+
+                // Both case are treated. Re-enable click handling
+                $('.memory-card').bind('click', clickHandler);
             }
+        };
 
-            //Re-enable click handling
-            $('.memory-card').bind('click', clickHandler);
-        }
+
+        // On every memory card click.
+        $('.memory-card').bind('click', clickHandler);
     }
-
-    // On every memory card click
-    $('.memory-card').bind('click', clickHandler);
 });

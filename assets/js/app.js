@@ -15,4 +15,7 @@ imagesContext.keys().forEach(imagesContext);
 // Require Bootstrap
 require('bootstrap');
 
+// Require JS logic
+require('./time.js');
+require('./end.js');
 require('./game.js');
