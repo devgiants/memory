@@ -9,36 +9,6 @@ $(function () {
         // Define needed vars
         let $firstCard, $secondCard;
 
-        // Define click handler (for click on any card) externally to make it unbindable
-        let clickHandler = function (e) {
-            e.preventDefault();
-
-            // If no game iteration in progress, this is the first card of the iteration
-            if (!$firstCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
-                $(this).addClass(['flipped', 'iteration']);
-                $firstCard = $(this);
-                console.log('first card chosen.')
-            }
-
-            // One card has already been flipped, this is the second shot (only if different unflipped card is clicked)
-            else if (!$secondCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
-
-                $secondCard = $(this);
-
-                // Bind choice logic for decision on transition end fot this card
-                $secondCard.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', transitionHandler);
-
-                $(this).addClass(['flipped', 'iteration']);
-
-                // Temporarily disable click handling to avoid unnecessary processes, as we need to compute a result before accept other flips.
-                $('.memory-card').unbind('click', clickHandler);
-
-                console.log('second card chosen.')
-            }
-
-            // TODO send insight to server for history
-        };
-
         // Define transition handler, this is here the decision is made
         let transitionHandler = function () {
             // If both cards are defined, we have to make a decision
@@ -84,6 +54,35 @@ $(function () {
             }
         };
 
+        // Define click handler (for click on any card) externally to make it unbindable
+        let clickHandler = function (e) {
+            e.preventDefault();
+
+            // If no game iteration in progress, this is the first card of the iteration
+            if (!$firstCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
+                $(this).addClass(['flipped', 'iteration']);
+                $firstCard = $(this);
+                console.log('first card chosen.')
+            }
+
+            // One card has already been flipped, this is the second shot (only if different unflipped card is clicked)
+            else if (!$secondCard && !($(this).hasClass('flipped') || $(this).hasClass('iteration'))) {
+
+                $secondCard = $(this);
+
+                // Bind choice logic for decision on transition end fot this card
+                $secondCard.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', transitionHandler);
+
+                $(this).addClass(['flipped', 'iteration']);
+
+                // Temporarily disable click handling to avoid unnecessary processes, as we need to compute a result before accept other flips.
+                $('.memory-card').unbind('click', clickHandler);
+
+                console.log('second card chosen.')
+            }
+
+            // TODO send insight to server for history
+        };
 
         // On every memory card click.
         $('.memory-card').bind('click', clickHandler);
