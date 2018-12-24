@@ -42,7 +42,7 @@ class CardFlusher implements CardFlusherInterface
     /**
      * Shuffle the cards and get the result
      *
-     * @return array[Card]
+     * @return array cards array shuffled
      */
     public function shuffle(): array
     {
