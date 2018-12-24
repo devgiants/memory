@@ -22,7 +22,7 @@ interface CardFlusherInterface
     public function init(array $initialCards);
 
     /**
-     * @return array[Card]
+     * @return array card array shuffled
      */
     public function shuffle(): array;
 }
