@@ -11,15 +11,8 @@ require('../scss/app.scss');
 const imagesContext = require.context('../images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
 
-// Use jQuery
-var $ = require('jquery');
 
 // Require Bootstrap
 require('bootstrap');
 
-$(function () {
-  $('.memory-card').click(function(e){
-    e.preventDefault();
-    $(this).toggleClass('flipped');
-  })
-});
+require('./game.js');
