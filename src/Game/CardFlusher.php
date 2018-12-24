@@ -6,14 +6,17 @@
  * Time: 22:45
  */
 
-namespace Memory;
+namespace App\Game;
+
+use App\Model\CardFlusherInterface;
+use Memory\Card;
 
 /**
  * Class CardFlusher
  *
- * @package Memory
+ * @package App\Game
  */
-class CardFlusher
+class CardFlusher implements CardFlusherInterface
 {
 
     /**
@@ -22,13 +25,16 @@ class CardFlusher
     protected $initialCards;
 
     /**
-     * CardFlusher constructor.
+     * CardFlusher init.
      *
      * @param array $initialCards cards initial set
      */
-    public function __construct(array $initialCards)
+    public function init(array $initialCards)
     {
         foreach ($initialCards as $initialCard) {
+
+            // Add 2 cards in deck
+            $this->initialCards[] = new Card($initialCard);
             $this->initialCards[] = new Card($initialCard);
         }
     }
