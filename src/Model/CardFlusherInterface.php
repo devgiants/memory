@@ -10,6 +10,7 @@ namespace App\Model;
 
 /**
  * Interface CardFlusherInterface
+ * Used to create contract CardFlushers object must respect. Useful for flex autowiring loose coupling and type-hinting
  */
 interface CardFlusherInterface
 {
@@ -23,5 +24,5 @@ interface CardFlusherInterface
     /**
      * @return array[Card]
      */
-    public function flush(): array;
+    public function shuffle(): array;
 }

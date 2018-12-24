@@ -40,12 +40,13 @@ class CardFlusher implements CardFlusherInterface
     }
 
     /**
-     * Flush the cards and get the result
+     * Shuffle the cards and get the result
      *
      * @return array[Card]
      */
-    public function flush(): array
+    public function shuffle(): array
     {
+        shuffle($this->initialCards);
         return $this->initialCards;
     }
 }
