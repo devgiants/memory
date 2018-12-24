@@ -1,0 +1,3 @@
+build:
+  environment:
+    node: v11.5.0
