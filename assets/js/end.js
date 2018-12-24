@@ -10,7 +10,7 @@ $(function () {
          */
         $( document ).on( "gameFinished", function(event, status) {
             console.log('callback for modal called : ' + status);
-            let modalText;
+            let modalText = "";
             switch (status) {
                 case 'win':
                     modalText = "Vous avez gagné ! Bravo !";
