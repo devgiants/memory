@@ -39,6 +39,13 @@ class Game
     protected $status = GameStatuses::IN_PROGRESS;
 
     /**
+     * @var int the time given to finish game
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $timeToFinish;
+
+    /**
      * @return \Ramsey\Uuid\UuidInterface
      */
     public function getId() : ?UuidInterface
@@ -62,6 +69,26 @@ class Game
     public function setStatus(string $status): Game
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeToFinish(): int
+    {
+        return $this->timeToFinish;
+    }
+
+    /**
+     * @param int $timeToFinish
+     *
+     * @return Game
+     */
+    public function setTimeToFinish(int $timeToFinish): Game
+    {
+        $this->timeToFinish = $timeToFinish;
 
         return $this;
     }
