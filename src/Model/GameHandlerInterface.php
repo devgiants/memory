@@ -10,6 +10,7 @@ namespace App\Model;
 
 
 use App\Entity\Game;
+use Doctrine\ORM\EntityNotFoundException;
 use Ramsey\Uuid\UuidInterface;
 
 interface GameHandlerInterface
@@ -25,10 +26,11 @@ interface GameHandlerInterface
     public function create(): Game;
 
     /**
-     * @param UuidInterface $uuid
-     * @param array $gameData
+     * @param Game $game
+     * @param string $serializedGameData
      *
      * @return Game
+     * @throws EntityNotFoundException
      */
-    public function update(UuidInterface $uuid, array $gameData) : Game;
+    public function update(Game $game, string $serializedGameData): Game;
 }

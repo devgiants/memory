@@ -58,7 +58,7 @@ class GameController extends AbstractController
             '@App/game/game.html.twig',
             [
                 'cards'    => $cardsFlusher->shuffle(),
-                'gameTime' => $this->getParameter('game_time')
+                'game' => $game
             ]
         );
     }

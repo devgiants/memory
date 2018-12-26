@@ -24,7 +24,7 @@ parameters:
         - green-lemon
         - apricot
         - bananas
-    game_time: 180
+    game_time: 5
 
 services:
     # default configuration for services in *this* file

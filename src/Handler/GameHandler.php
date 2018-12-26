@@ -9,11 +9,16 @@
 namespace App\Handler;
 
 use App\Entity\Game;
+use App\Exception\GameStatusException;
 use App\Model\CardFlusherInterface;
 use App\Model\GameHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping\Entity;
+use Memory\GameStatuses;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class GameHandler implements GameHandlerInterface
 {
@@ -28,9 +33,19 @@ class GameHandler implements GameHandlerInterface
     protected $entityManager;
 
     /**
+     * @var SerializerInterface
+     */
+    protected $serializer;
+
+    /**
      * @var int $timeToFinish
      */
     protected $timeToFinish;
+
+    /**
+     * @var \ReflectionClass
+     */
+    protected $gameStatusesClassReflection;
 
     /**
      * GameHandler constructor.
@@ -38,12 +53,21 @@ class GameHandler implements GameHandlerInterface
      * @param CardFlusherInterface $cardsFlusher
      * @param EntityManagerInterface $entityManager
      * @param int $gameTime
+     *
+     * @throws \ReflectionException
      */
-    public function __construct(CardFlusherInterface $cardsFlusher, EntityManagerInterface $entityManager, int $gameTime)
-    {
-        $this->cardsFlusher = $cardsFlusher;
+    public function __construct(
+        CardFlusherInterface $cardsFlusher,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        int $gameTime
+    ) {
+        $this->cardsFlusher  = $cardsFlusher;
         $this->entityManager = $entityManager;
-        $this->timeToFinish = $gameTime;
+        $this->serializer    = $serializer;
+        $this->timeToFinish  = $gameTime;
+
+        $this->gameStatusesClassReflection = new \ReflectionClass(GameStatuses::class);
     }
 
     /**
@@ -60,7 +84,8 @@ class GameHandler implements GameHandlerInterface
      */
     public function create(): Game
     {
-        $newGame = new Game($this->timeToFinish);
+        $newGame = new Game();
+        $newGame->setTimeToFinish($this->timeToFinish);
         $this->entityManager->persist($newGame);
         $this->entityManager->flush();
 
@@ -68,15 +93,52 @@ class GameHandler implements GameHandlerInterface
     }
 
     /**
-     * Update a game with given params
-     *
-     * @param UuidInterface $uuid
-     * @param array $gameData
+     * @param Game $game
+     * @param string $serializedGameData
      *
      * @return Game
      */
-    public function update(UuidInterface $uuid, array $gameData): Game
+    public function update(Game $game, string $serializedGameData): Game
     {
+        // TODO use Serializer with correct denormalizer
+        $gameData = json_decode($serializedGameData);
+
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+
+        foreach ($gameData as $property => $data) {
+            if ($propertyAccessor->isReadable($game, $property)) {
+
+                switch ($property) {
+                    case 'status':
+                        // Check if status is allowed
+                        if (! in_array($data, $this->gameStatusesClassReflection->getConstants())) {
+                            throw new GameStatusException("Statusgiven is not allowed : only " . implode(', ',
+                                    $this->gameStatusesClassReflection->getConstants()));
+                        }
+                        break;
+                }
+
+                $propertyAccessor->setValue($game, $property, $data);
+            }
+        }
+
+        $this->entityManager->flush();
+
+        return $game;
+    }
+
+    /**
+     * @param UuidInterface $uuid
+     *
+     * @return Game
+     * @throws EntityNotFoundException
+     */
+    protected function findGameByUuid(UuidInterface $uuid)
+    {
+        $game = $this->entityManager->getRepository(Game::class)->find($uuid);
+        if (! $game instanceof Game) {
+            throw new EntityNotFoundException();
+        }
 
         return $game;
     }

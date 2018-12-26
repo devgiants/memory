@@ -42,10 +42,9 @@ $(function () {
 
                 // Check game end
                 if ($('.memory-card:not(.flipped)').length === 0) {
-                    // TODO send insight to server for history
 
                     // Finish game
-                    $( document ).trigger( "gameFinished", ['win']);
+                    $( document ).trigger( "gameFinished", ['won']);
                 }
             }
         };

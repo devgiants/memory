@@ -1,3 +1,9 @@
 sensio_framework_extra:
     router:
         annotations: false
+
+    # to allow for example body_converter for FOS_Rest and on-the-fly deserialization
+    request: { converters: true }
+
+    # to allow @View usage on controller methods
+    view: { annotations: true }

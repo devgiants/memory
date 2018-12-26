@@ -9,31 +9,38 @@
 namespace App\Controller;
 
 
+use App\Entity\Game;
 use App\Model\GameHandlerInterface;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\View\View;;
+use JMS\Serializer\SerializerInterface;
 use Ramsey\Uuid\Uuid;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class RestGameController extends FOSRestController
+class ApiGameController extends FOSRestController
 {
 
     /**
-     * @param array $gameData
-     * @param ParamFetcherInterface $paramFetcher
+     * @param Request $request
+     * @param Game $game
      * @param GameHandlerInterface $gameHandler
+     *
      * @return View amended view with new post link in header
      *
-     * @Rest\Put("/api/game/{uuid}", name="game_rest_update")
+     * @Rest\Put("/api/game/{uuid}", name="game_rest_update", requirements={"uuid"="\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b"})
+     * @ParamConverter("game", options={"id" = "uuid"})
      */
-    public function updateGame(array $gameData, ParamFetcherInterface $paramFetcher, GameHandlerInterface $gameHandler) : View
-    {
-        $gameUuid = Uuid::fromString($paramFetcher->get('uuid'));
 
-        $game = $gameHandler->update($gameUuid, $gameData);
+    public function updateGameStatus(Request $request, Game $game, GameHandlerInterface $gameHandler) : View
+    {
+        // TODO use another ParamConverter for array, not working so far.
+
+        $game = $gameHandler->update($game, $request->getContent());
         // Return amended view for links purpose
         return $this->view(
             $game,

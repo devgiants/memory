@@ -45,17 +45,6 @@ class Game
      */
     protected $timeToFinish;
 
-
-    /**
-     * Game constructor.
-     *
-     * @param int $timeToFinish the time allowed to play this particular game (in seconds)
-     */
-    public function __construct(int $timeToFinish)
-    {
-        $this->timeToFinish = $timeToFinish;
-    }
-
     /**
      * @return \Ramsey\Uuid\UuidInterface
      */

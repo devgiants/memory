@@ -1,5 +1,6 @@
 {% extends "@App/base.html.twig" %}
 {% block body_classes %}game{% endblock body_classes %}
+{% block body_data %}data-game-id="{{ game.id }}"{% endblock body_data %}
 {% block content %}
     <div class="d-flex flex-wrap align-content-between justify-content-between col-12">
         {% for card in cards %}
@@ -14,10 +15,10 @@
     <div class="col-12 text-center">
         <h2>
             {{ "memory.game.time.title"|trans }}
-            <span id="time-left">{{ gameTime }}</span>s.
+            <span id="time-left">{{ game.timeToFinish }}</span>s.
         </h2>
         <div class="progress col-12">
-            <div data-game-time="{{ gameTime }}" class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%"
+            <div data-game-time="{{ game.timeToFinish }}" class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%"
                  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </div>
