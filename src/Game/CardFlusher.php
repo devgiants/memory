@@ -25,17 +25,32 @@ class CardFlusher implements CardFlusherInterface
     protected $initialCards;
 
     /**
-     * CardFlusher init.
-     *
-     * @param array $initialCards cards initial set
+     * @var array $shuffledCards
      */
-    public function init(array $initialCards)
+    protected $shuffledCards;
+
+
+    /**
+     * CardFlusher constructor.
+     *
+     * @param array $availableCards
+     */
+    public function __construct(array $availableCards)
     {
-        foreach ($initialCards as $initialCard) {
+        $this->initialCards = $availableCards;
+        $this->init();
+    }
+
+    /**
+     * CardFlusher init.
+     */
+    protected function init()
+    {
+        foreach ($this->initialCards as $initialCard) {
 
             // Add 2 cards in deck
-            $this->initialCards[] = new Card($initialCard);
-            $this->initialCards[] = new Card($initialCard);
+            $this->shuffledCards[] = new Card($initialCard);
+            $this->shuffledCards[] = new Card($initialCard);
         }
     }
 
@@ -46,7 +61,7 @@ class CardFlusher implements CardFlusherInterface
      */
     public function shuffle(): array
     {
-        shuffle($this->initialCards);
-        return $this->initialCards;
+        shuffle($this->shuffledCards);
+        return $this->shuffledCards;
     }
 }

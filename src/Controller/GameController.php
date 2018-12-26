@@ -9,11 +9,9 @@
 namespace App\Controller;
 
 use App\Entity\Game;
-use App\Game\CardFlusher;
-use App\Model\CardFlusherInterface;
 use App\Model\GameHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Ramsey\Uuid\UuidInterface;
+use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,21 +25,17 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GameController extends AbstractController
 {
-
     /**
      * Starts a new game
      *
-     * @param EntityManagerInterface $entityManager
+     * @param GameHandlerInterface $gameHandler
      * @return Response
      * @Route("/new-game", name="app_new_game")
      */
-    public function newGame(EntityManagerInterface $entityManager): Response
+    public function newGame(GameHandlerInterface $gameHandler): Response
     {
         // Creates and persist new game
-        $newGame = new Game();
-        $entityManager->persist($newGame);
-        $entityManager->flush();
-
+        $newGame = $gameHandler->create();
 
         return $this->redirectToRoute('app_game', ['uuid' => $newGame->getId()]);
     }
@@ -59,8 +53,6 @@ class GameController extends AbstractController
     public function displayGame(Game $game, GameHandlerInterface $gameHandler): Response
     {
         $cardsFlusher = $gameHandler->getCardsFlusher();
-
-        $cardsFlusher->init($this->getParameter('available_cards'));
 
         return $this->render(
             '@App/game/game.html.twig',

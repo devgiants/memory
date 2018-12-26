@@ -32,6 +32,11 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+        # Necessary binding to use parameters as service arguments
+        bind:
+            $availableCards: '%available_cards%'
+            $gameTime: '%game_time%'
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -46,3 +51,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Used to allow autowiring on following custom exception controller
+    FOS\RestBundle\Util\ExceptionValueMap: '@fos_rest.exception.codes_map'
+
+    app.json_exception_controller:
+        public: true
+        class: App\Controller\ExceptionController
+        arguments:
+            - '@fos_rest.exception.codes_map'

@@ -14,12 +14,6 @@ namespace App\Model;
  */
 interface CardFlusherInterface
 {
-    /**
-     * @param array $initialCards
-     *
-     * @return void
-     */
-    public function init(array $initialCards);
 
     /**
      * @return array card array shuffled
