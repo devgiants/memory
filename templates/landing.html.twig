@@ -1,4 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-    <a href="{{ path('app_new_game') }}">{{ "memory.landing.link"|trans }}</a>
+    <div class="container">
+        <h1 class="text-center">{{ "memory.landing.title"|trans }}</h1>
+        <ul>
+            <li class="text-center">
+                <a class="btn btn-primary" href="{{ path('app_new_game') }}">{{ "memory.landing.new_game"|trans }}</a>
+            </li>
+            <li class="text-center">
+                <a class="btn btn-warning" href="{{ path('app_show_games') }}">{{ "memory.landing.games"|trans }}</a>
+            </li>
+        </ul>
+    </div>
 {% endblock content %}

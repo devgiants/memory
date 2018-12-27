@@ -44,54 +44,71 @@
     &.red-apple {
       @include card-background-position(0);
     }
+
     &.yellow-cherries {
       @include card-background-position(1);
     }
+
     &.mango {
       @include card-background-position(2);
     }
+
     &.raspberry {
       @include card-background-position(3);
     }
+
     &.red-cherries {
       @include card-background-position(4);
     }
+
     &.orange-pear {
       @include card-background-position(5);
     }
+
     &.purple-peach {
       @include card-background-position(6);
     }
+
     &.watermelon {
       @include card-background-position(7);
     }
+
     &.grape {
       @include card-background-position(8);
     }
+
     &.peach {
       @include card-background-position(9);
     }
+
     &.green-apple {
       @include card-background-position(10);
     }
+
     &.strawberry {
       @include card-background-position(11);
     }
+
     &.lemon {
       @include card-background-position(12);
     }
+
     &.peach-2 {
       @include card-background-position(13);
     }
+
     &.passion-fruit {
       @include card-background-position(14);
     }
+
     &.green-lemon {
       @include card-background-position(15);
     }
+
     &.apricot {
       @include card-background-position(16);
     }
+
     &.bananas {
       @include card-background-position(17);
     }
@@ -102,5 +119,16 @@
     .inner {
       transform: rotateY(180deg);
     }
+  }
+}
+
+.game {
+  margin-top: $grid-gutter-width/2;
+  margin-bottom: $grid-gutter-width/2;
+  padding: $grid-gutter-width/2;
+  flex-direction: row;
+
+  &:nth-child(odd) {
+    background: #17a2b8;
   }
 }
