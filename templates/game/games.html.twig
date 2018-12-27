@@ -1,0 +1,22 @@
+{% extends "@App/base.html.twig" %}
+{% block body_classes %}games list{% endblock body_classes %}
+
+{% block buttons %}
+    <div class="text-right">
+        <a class="btn btn-warning" href="{{ path('app_index') }}">
+            {{ "memory.buttons.return"|trans }}
+        </a>
+    </div>
+{% endblock buttons %}
+{% block content %}
+    <h1 class="text-center">{{ "memory.games.title"|trans }}</h1>
+    {{ block('buttons') }}
+    {% for game in games %}
+        <div class="game card col-12 d-flex justify-content-center">
+            <div class="col-4">{{ "memory.games.game.id"|trans({'%id%': game.id|trans}) }}</div>
+            <div class="col-4">{{ "memory.games.game.status"|trans({'%status%': game.status|trans}) }}</div>
+            <div class="col-4">{{ "memory.games.game.time"|trans({'%time_to_finish%': game.timeToFinish, '%time_left%': game.timeLeft}) }}</div>
+        </div>
+    {% endfor %}
+    {{ block('buttons') }}
+{% endblock content %}

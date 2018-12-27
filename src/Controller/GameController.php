@@ -12,6 +12,7 @@ use App\Entity\Game;
 use App\Model\GameHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\View\View;
+use Memory\GameStatuses;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,6 +30,7 @@ class GameController extends AbstractController
      * Starts a new game
      *
      * @param GameHandlerInterface $gameHandler
+     *
      * @return Response
      * @Route("/new-game", name="app_new_game")
      */
@@ -52,13 +54,42 @@ class GameController extends AbstractController
      */
     public function displayGame(Game $game, GameHandlerInterface $gameHandler): Response
     {
-        $cardsFlusher = $gameHandler->getCardsFlusher();
+        // Verify and update game status if necessary
+        $gameHandler->handleLongTermStatus($game);
+
+        $args = [
+            'game'  => $game
+        ];
+
+        // Only is game is still in progress, get cards
+        if(GameStatuses::IN_PROGRESS === $game->getStatus()) {
+            $cardsFlusher = $gameHandler->getCardsFlusher();
+            $args['cards'] = $cardsFlusher->shuffle();
+        }
+
 
         return $this->render(
             '@App/game/game.html.twig',
+            $args
+        );
+    }
+
+    /**
+     * Display games list
+     * @param GameHandlerInterface $gameHandler
+     *
+     * @return Response
+     * @Route("/games", name="app_show_games")
+     */
+    public function displayGames(GameHandlerInterface $gameHandler) : Response
+    {
+        // TODO add pagination
+        $games = $gameHandler->getAllGames();
+
+        return $this->render(
+            '@App/game/games.html.twig',
             [
-                'cards'    => $cardsFlusher->shuffle(),
-                'game' => $game
+                'games' => $games
             ]
         );
     }
