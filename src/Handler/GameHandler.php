@@ -81,6 +81,7 @@ class GameHandler implements GameHandlerInterface
 
     /**
      * @return Game
+     * @throws \Exception
      */
     public function create(): Game
     {
@@ -141,5 +142,34 @@ class GameHandler implements GameHandlerInterface
         }
 
         return $game;
+    }
+
+
+    /**
+     * @return Game[]|array|object[]
+     */
+    public function getAllGames()
+    {
+        $games = $this->entityManager->getRepository(Game::class)->findAll();
+
+        return $games;
+    }
+
+    /**
+     * @param Game $game
+     *
+     * @throws \Exception
+     */
+    public function handleLongTermStatus(Game $game)
+    {
+        $now = new \DateTime();
+
+        // Compare current date/time with start game date/time + time allowed to execute game
+        // If result is bigger, it means that game is over
+        if ($now > ($game->getStartDate()->add(new \DateInterval("PT{$game->getTimeToFinish()}S")))) {
+            // Game is over without finish playing, it is lost
+            $game->setStatus(GameStatuses::LOST);
+            $this->entityManager->flush();
+        }
     }
 }

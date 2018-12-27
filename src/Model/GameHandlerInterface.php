@@ -33,4 +33,15 @@ interface GameHandlerInterface
      * @throws EntityNotFoundException
      */
     public function update(Game $game, string $serializedGameData): Game;
+
+    /**
+     * @return Game[]|array|object[]
+     */
+    public function getAllGames();
+
+    /**
+     * @param Game $game
+     *
+     */
+    public function handleLongTermStatus(Game $game);
 }
