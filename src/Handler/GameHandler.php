@@ -169,6 +169,7 @@ class GameHandler implements GameHandlerInterface
         if ($now > ($game->getStartDate()->add(new \DateInterval("PT{$game->getTimeToFinish()}S")))) {
             // Game is over without finish playing, it is lost
             $game->setStatus(GameStatuses::LOST);
+            $game->setTimeLeft(0);
             $this->entityManager->flush();
         }
     }
