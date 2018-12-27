@@ -16,7 +16,7 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * Represent a game with its data
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
  * @ORM\Table()
  */
 class Game
@@ -46,9 +46,54 @@ class Game
     protected $timeToFinish;
 
     /**
+     * @var int the time left when game finished
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $timeLeft;
+
+    /**
+     * @var \DateTime $startDate
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $startDate;
+
+
+    /**
+     * Game constructor.
+     *
+     * @throws \Exception
+     */
+    public function __construct()
+    {
+        $this->startDate = new \DateTime();
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartDate(): \DateTime
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param \DateTime $startDate
+     *
+     * @return Game
+     */
+    public function setStartDate(\DateTime $startDate): Game
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    /**
      * @return \Ramsey\Uuid\UuidInterface
      */
-    public function getId() : ?UuidInterface
+    public function getId(): ?UuidInterface
     {
         return $this->id;
     }
@@ -69,6 +114,26 @@ class Game
     public function setStatus(string $status): Game
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeLeft(): ?int
+    {
+        return $this->timeLeft;
+    }
+
+    /**
+     * @param int $timeLeft
+     *
+     * @return Game
+     */
+    public function setTimeLeft(int $timeLeft): Game
+    {
+        $this->timeLeft = $timeLeft;
 
         return $this;
     }
