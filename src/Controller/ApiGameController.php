@@ -34,8 +34,8 @@ class ApiGameController extends FOSRestController
      *
      * @Rest\Put("/api/game/{uuid}", name="game_rest_update", requirements={"uuid"="\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b"})
      * @ParamConverter("game", options={"id" = "uuid"})
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
-
     public function updateGameStatus(Request $request, Game $game, GameHandlerInterface $gameHandler) : View
     {
         // TODO use another ParamConverter for array, not working so far.
