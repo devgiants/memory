@@ -8,14 +8,14 @@ $(function () {
         /**
          * Register a callback to detect game finished
          */
-        $( document ).on( "gameFinished", function(event, status) {
+        $( document ).on( "gameFinished", function(event, status, timeLeft) {
             console.log('callback for modal called : ' + status);
             let modalText = "";
             switch (status) {
-                case 'win':
+                case 'won':
                     modalText = "Vous avez gagné ! Bravo !";
                     break;
-                case 'loose':
+                case 'lost':
                     modalText = "Vous avez perdu... Pourquoi ne pas réessayer?"
                     break;
             }
@@ -23,7 +23,10 @@ $(function () {
             let endPoint = '/api/game/{game_id}';
             endPoint = endPoint.replace('{game_id}', $('body').attr('data-game-id'));
 
-            let data = {'status': status};
+            let data = {
+                'status': status,
+                'timeLeft': timeLeft
+            };
 
             // Mark game as finished
             $.ajax({

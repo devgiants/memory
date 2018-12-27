@@ -43,8 +43,9 @@ $(function () {
                 // Check game end
                 if ($('.memory-card:not(.flipped)').length === 0) {
 
+                    let timeLeft = parseInt($('#time-left').text());
                     // Finish game
-                    $( document ).trigger( "gameFinished", ['won']);
+                    $( document ).trigger( "gameFinished", ['won', timeLeft]);
                 }
             }
         };

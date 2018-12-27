@@ -50,7 +50,7 @@ $(function () {
 
             // If counter is 0, game finished
             if (counter === 0) {
-                $( document ).trigger( "gameFinished", ['lost']);
+                $( document ).trigger( "gameFinished", ['lost', counter]);
             }
         };
 
