@@ -24,6 +24,10 @@ encore-prod: up
 encore-watch: up
 	docker-compose exec -u www-data php yarn encore dev --watch
 
+migration: up
+	docker-compose exec -u www-data php php bin/console doctrine:migrations:diff
+	docker-compose exec -u www-data php php bin/console doctrine:migrations:migrate
+
 up:
 	docker-compose up -d
 
