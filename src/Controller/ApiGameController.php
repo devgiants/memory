@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Model\GameHandlerInterface;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;;
 use JMS\Serializer\SerializerInterface;
 use Ramsey\Uuid\Uuid;
@@ -22,6 +21,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+/**
+ * Class ApiGameController
+ *
+ * @package App\Controller
+ */
 class ApiGameController extends FOSRestController
 {
 
