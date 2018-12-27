@@ -122,13 +122,21 @@
   }
 }
 
-.game {
-  margin-top: $grid-gutter-width/2;
-  margin-bottom: $grid-gutter-width/2;
-  padding: $grid-gutter-width/2;
-  flex-direction: row;
+.games {
+  a {
+    color: black;
+    &:hover {
+      text-decoration: none;
+    }
+    .game {
+      margin-top: $grid-gutter-width/2;
+      margin-bottom: $grid-gutter-width/2;
+      padding: $grid-gutter-width/2;
+      flex-direction: row;
 
-  &:nth-child(odd) {
-    background: #17a2b8;
+      &:nth-child(odd) {
+        background: #17a2b8;
+      }
+    }
   }
 }

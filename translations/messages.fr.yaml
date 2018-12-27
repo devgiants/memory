@@ -20,3 +20,7 @@ memory:
       id: "Jeu : %id%"
       status: "Statut : %status%"
       time: "Temps imparti : %time_to_finish%s. Temps restant : %time_left%s"
+      history:
+        title: Historique de votre partie
+        details: >
+                  Cette partie est terminée ! Elle a été jouée le %date%, sur %time%s.

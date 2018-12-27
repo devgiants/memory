@@ -2,38 +2,47 @@
 {% block body_classes %}game{% endblock body_classes %}
 {% block body_data %}data-game-id="{{ game.id }}"{% endblock body_data %}
 {% block content %}
-    <div class="d-flex flex-wrap align-content-between justify-content-between col-12">
-        {% for card in cards %}
-            <div class="memory-card">
-                <div class="inner">
-                    <div class="front"></div>
-                    <div class="back {{ card.name }}"></div>
+    {% if cards is defined %}
+        <div class="d-flex flex-wrap align-content-between justify-content-between col-12">
+            {% for card in cards %}
+                <div class="memory-card">
+                    <div class="inner">
+                        <div class="front"></div>
+                        <div class="back {{ card.name }}"></div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="col-12 text-center">
-        <h2>
-            {{ "memory.game.time.title"|trans }}
-            <span id="time-left">{{ game.timeToFinish }}</span>s.
-        </h2>
-        <div class="progress col-12">
-            <div data-game-time="{{ game.timeToFinish }}" class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%"
-                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            {% endfor %}
         </div>
-    </div>
+        <div class="col-12 text-center">
+            <h2>
+                {{ "memory.game.time.title"|trans }}
+                <span id="time-left">{{ game.timeToFinish }}</span>s.
+            </h2>
+            <div class="progress col-12">
+                <div data-game-time="{{ game.timeToFinish }}" class="progress-bar progress-bar-striped bg-success"
+                     role="progressbar" style="width: 100%"
+                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
 
-    <div id="end-game-modal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ "memory.game.modal.title"|trans }}</h5>
-                </div>
-                <div class="modal-body">
-                    <p></p>
-                    <a href="{{ path('app_index') }}" class="btn btn-primary">{{ "memory.game.modal.return"|trans }}</a>
+        <div id="end-game-modal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ "memory.game.modal.title"|trans }}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p></p>
+                        <a href="{{ path('app_new_game') }}"
+                           class="btn btn-primary col-6">{{ "memory.game.modal.new"|trans }}</a>
+                        <a href="{{ path('app_index') }}"
+                           class="btn btn-warning col-6">{{ "memory.buttons.return"|trans }}</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <h1>{{ "memory.games.game.history.title"|trans }}</h1>
+        <p>{{ "memory.games.game.history.details"|trans({'%date%': game.startDate|date("d/m/Y (H:i:s)"), '%time%': game.timeToFinish}) }}</p>
+    {% endif %}
 {% endblock content %}
