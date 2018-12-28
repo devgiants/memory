@@ -52,8 +52,14 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    # Needed for testing purpose
+    app.game_handler:
+        public: true
+        class: App\Handler\GameHandler
+
     # Used to allow autowiring on following custom exception controller
     FOS\RestBundle\Util\ExceptionValueMap: '@fos_rest.exception.codes_map'
+
 
     app.json_exception_controller:
         public: true

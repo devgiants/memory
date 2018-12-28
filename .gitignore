@@ -3,6 +3,9 @@ docker/data
 docker/logs/*
 !docker/logs/.gitkeep
 .composer
+.yarn
+/public/coverage
+
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -30,4 +33,3 @@ yarn-error.log
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-.yarn

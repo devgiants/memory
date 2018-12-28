@@ -55,8 +55,12 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 && printf '[PHP]\ndate.timezone = "%s"\n', ${TIMEZONE} > /usr/local/etc/php/conf.d/tzone.ini \
 && "date"
 
+RUN pecl install xdebug-2.6.1
+
 # Type docker-php-ext-install to see available extensions
 RUN docker-php-ext-install pdo pdo_mysql
+
+RUN docker-php-ext-enable xdebug
 
 # Composer install
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
