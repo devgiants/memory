@@ -91,6 +91,8 @@ class GameHandler implements GameHandlerInterface
     {
         $newGame = new Game();
         $newGame->setTimeToFinish($this->timeToFinish);
+        $newGame->setStartDate(new \DateTime('now'));
+
         $this->entityManager->persist($newGame);
         $this->entityManager->flush();
 
