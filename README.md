@@ -65,4 +65,8 @@ Coverage report will be accessible on `/coverage/index.html`.
 
 ## TODO
 Tons of things stay untouched :
-- Create a dedicated test database 
+- Create a dedicated test database
+- Enhance tests
+- Make an Angular front-end :)
+- Creates history for each iteration
+- ...
