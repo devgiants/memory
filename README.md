@@ -54,4 +54,15 @@ You must then add a vhost to link with the project, and access to the game with 
 ## Configuration
 `config/services.yaml` contains several parameters you can change :
 - `available_cards` that defines [CSS classes](https://github.com/devgiants/memory/blob/master/assets/scss/_game.scss#L44) related to `assets/images/cards.png`
-- `game_time` that defines time available to finish the game. 
+- `game_time` that defines time available to finish the game.
+
+## Tests
+I initiated some automated tests (very few). 
+
+To run test suite, just do `./bin/phpunit --coverage-html public/coverage`. This command must be executed on project root if you installed it directly, or inside `docker` app container (go in `docker/` folder then execute `make bash-php` to get quick access).
+
+Coverage report will be accessible on `/coverage/index.html`.
+
+## TODO
+Tons of things stay untouched :
+- Create a dedicated test database 

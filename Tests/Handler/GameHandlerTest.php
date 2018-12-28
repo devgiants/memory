@@ -10,9 +10,11 @@ namespace App\Tests\Handler;
 
 
 use App\Entity\Game;
+use App\Model\CardFlusherInterface;
 use App\Model\GameHandlerInterface;
 use PHPUnit\Framework\Assert;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class GameHandlerTest
@@ -21,6 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class GameHandlerTest extends WebTestCase
 {
+
     /**
      * @var GameHandlerInterface
      */
@@ -30,6 +33,11 @@ class GameHandlerTest extends WebTestCase
      * @var Game $testGame
      */
     protected $testGame;
+
+    /**
+     * @var int
+     */
+    protected $timeToFinish;
 
     /**
      * GameHandlerTest constructor.
@@ -49,6 +57,8 @@ class GameHandlerTest extends WebTestCase
         // Init gameHandler attribute
         $this->gameHandler = $container->get('app.game_handler');
 //        $this->gameHandler = $this->createMock(GameHandler::class);
+
+        $this->timeToFinish = $container->getParameter('game_time');
     }
 
     /**
@@ -70,5 +80,23 @@ class GameHandlerTest extends WebTestCase
         Assert::assertEquals($this->gameHandler->getTimeToFinish(), $game->getTimeToFinish());
     }
 
+    /**
+     * Check card flusher returns a CardFlusherInterface
+     */
+    public function testGetCardFlusher()
+    {
+        $cardFlusher = $this->gameHandler->getCardsFlusher();
 
+        Assert::assertInstanceOf(CardFlusherInterface::class, $cardFlusher);
+    }
+
+    /**
+     * Check getTimeToFinish returns correct parameter
+     */
+    public function testGetTimeToFinish()
+    {
+        $timeToFinish = $this->gameHandler->getTimeToFinish();
+
+        Assert::assertEquals($this->timeToFinish, $timeToFinish);
+    }
 }
