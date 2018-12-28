@@ -65,20 +65,21 @@ class GameHandlerTest extends WebTestCase
      * Test create new game method
      * @throws \Exception
      */
-    public function testCreateNewGame()
-    {
-
-        $game = $this->gameHandler->create();
-
-        // Game var should be instance of Game class
-        Assert::assertInstanceOf(Game::class, $game);
-
-        // Game should have a UUID, meaning it's persisted
+    // TODO export in repository to allow mock testing
+//    public function testCreateNewGame()
+//    {
+//
+//        $game = $this->gameHandler->create();
+//
+//        // Game var should be instance of Game class
+//        Assert::assertInstanceOf(Game::class, $game);
+//
+//        // Game should have a UUID, meaning it's persisted
 //        Assert::assertNotNull($game->getId());
-
-        // Time to finish specified in GameHandler should be the one provided to the game
-        Assert::assertEquals($this->gameHandler->getTimeToFinish(), $game->getTimeToFinish());
-    }
+//
+//        // Time to finish specified in GameHandler should be the one provided to the game
+//        Assert::assertEquals($this->gameHandler->getTimeToFinish(), $game->getTimeToFinish());
+//    }
 
     /**
      * Check card flusher returns a CardFlusherInterface
