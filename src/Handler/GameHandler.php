@@ -14,12 +14,15 @@ use App\Model\CardFlusherInterface;
 use App\Model\GameHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\ORM\Mapping\Entity;
 use Memory\GameStatuses;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Serializer\SerializerInterface;
 
+/**
+ * Class GameHandler
+ *
+ * @package App\Handler
+ */
 class GameHandler implements GameHandlerInterface
 {
     /**
@@ -31,11 +34,6 @@ class GameHandler implements GameHandlerInterface
      * @var EntityManagerInterface $entityManager
      */
     protected $entityManager;
-
-    /**
-     * @var SerializerInterface
-     */
-    protected $serializer;
 
     /**
      * @var int $timeToFinish
@@ -59,15 +57,21 @@ class GameHandler implements GameHandlerInterface
     public function __construct(
         CardFlusherInterface $cardsFlusher,
         EntityManagerInterface $entityManager,
-        SerializerInterface $serializer,
         int $gameTime
     ) {
         $this->cardsFlusher  = $cardsFlusher;
         $this->entityManager = $entityManager;
-        $this->serializer    = $serializer;
         $this->timeToFinish  = $gameTime;
 
         $this->gameStatusesClassReflection = new \ReflectionClass(GameStatuses::class);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeToFinish(): int
+    {
+        return $this->timeToFinish;
     }
 
     /**
@@ -113,7 +117,7 @@ class GameHandler implements GameHandlerInterface
                     case 'status':
                         // Check if status is allowed
                         if (! in_array($data, $this->gameStatusesClassReflection->getConstants())) {
-                            throw new GameStatusException("Statusgiven is not allowed : only " . implode(', ',
+                            throw new GameStatusException("Status given is not allowed : only " . implode(', ',
                                     $this->gameStatusesClassReflection->getConstants()));
                         }
                         break;
@@ -127,23 +131,6 @@ class GameHandler implements GameHandlerInterface
 
         return $game;
     }
-
-    /**
-     * @param UuidInterface $uuid
-     *
-     * @return Game
-     * @throws EntityNotFoundException
-     */
-    protected function findGameByUuid(UuidInterface $uuid)
-    {
-        $game = $this->entityManager->getRepository(Game::class)->find($uuid);
-        if (! $game instanceof Game) {
-            throw new EntityNotFoundException();
-        }
-
-        return $game;
-    }
-
 
     /**
      * @return Game[]|array|object[]
@@ -172,5 +159,21 @@ class GameHandler implements GameHandlerInterface
             $game->setTimeLeft(0);
             $this->entityManager->flush();
         }
+    }
+
+    /**
+     * @param UuidInterface $uuid
+     *
+     * @return Game
+     * @throws EntityNotFoundException
+     */
+    protected function findGameByUuid(UuidInterface $uuid)
+    {
+        $game = $this->entityManager->getRepository(Game::class)->find($uuid);
+        if (! $game instanceof Game) {
+            throw new EntityNotFoundException();
+        }
+
+        return $game;
     }
 }
