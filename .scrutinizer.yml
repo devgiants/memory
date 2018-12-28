@@ -1,6 +1,15 @@
 build:
   environment:
     node: v11.5.0
+  nodes:
+    coverage:
+      tests:
+        override:
+          - command: ./bin/phpunit --coverage-xml public/
+            coverage:
+              file: public/coverage.xml   # <- Set this to where we find the coverage data.
+              #    The path is relative to the current directory.
+              format: clover
 checks:
   php:
     simplify_boolean_return: true
@@ -43,12 +52,3 @@ checks:
       verify_interface_like_constraints: true
       verify_documented_constraints: true
       verify_parent_constraints: true
-  nodes:
-    coverage:
-      tests:
-        override:
-          - command: ./bin/phpunit --coverage-xml public/
-            coverage:
-              file: public/coverage.xml   # <- Set this to where we find the coverage data.
-              #    The path is relative to the current directory.
-              format: clover
