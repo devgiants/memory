@@ -11,7 +11,6 @@ namespace App\Model;
 
 use App\Entity\Game;
 use Doctrine\ORM\EntityNotFoundException;
-use Ramsey\Uuid\UuidInterface;
 
 interface GameHandlerInterface
 {
@@ -19,6 +18,11 @@ interface GameHandlerInterface
      * @return CardFlusherInterface
      */
     public function getCardsFlusher(): CardFlusherInterface;
+
+    /**
+     * @return int
+     */
+    public function getTimeToFinish(): int;
 
     /**
      * @return Game

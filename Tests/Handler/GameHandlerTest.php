@@ -10,7 +10,6 @@ namespace App\Tests\Handler;
 
 
 use App\Entity\Game;
-use App\Handler\GameHandler;
 use App\Model\GameHandlerInterface;
 use PHPUnit\Framework\Assert;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
