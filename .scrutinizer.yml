@@ -7,7 +7,7 @@ build:
         override:
           - command: ./bin/phpunit --coverage-xml public/
             coverage:
-              file: public/coverage.xml   # <- Set this to where we find the coverage data.
+              file: public/index.xml   # <- Set this to where we find the coverage data.
               #    The path is relative to the current directory.
               format: clover
 checks:
