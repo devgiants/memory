@@ -51,7 +51,7 @@ Finally, you can bring the project live by doing those steps (done in the projec
 5. `yarn install`
 6. `yarn encore production`
 
-You must then add a vhost to link with the project, and access to the game with the domain you configured.
+You must then add a vhost to link with the project, and access to the game with the domain you configured. _Fell free to use the one I provide to the Apache container, in `docker/images/apache2.4/app.conf`._
 
 ## Configuration
 `config/services.yaml` contains several parameters you can change :
