@@ -16,7 +16,9 @@ This is a __memory game__ implementation example, using following stack :
 
 The app allow following use cases :
 - Landing page presentation, to allow start a new game or see past games list.
-- Play new game, with configured time allowed (180s)
+- Play new game, with configured time allowed (180s configurable in `config/services.yaml`). The game is playable only if in progress
+- List played games with status (in progress, won, lost) and time left if won.
+   - Each game in list is clickable and leads to the game detail page.
 
 ## Setup
 
