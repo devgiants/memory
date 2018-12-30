@@ -63,7 +63,7 @@ I initiated some automated tests (very few).
 
 To run test suite, just do `./bin/phpunit --coverage-html public/coverage`. _This command must be executed on project root if you installed it directly, or inside `docker` app container (go in `docker/` folder then execute `make bash-php` to get quick access)._
 
-Coverage report will be accessible on `/coverage/index.html`.
+Coverage report will be accessible on `http://localhost:8900/coverage/index.html`.
 
 ## TODO
 Tons of things stay untouched :
