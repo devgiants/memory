@@ -16,7 +16,6 @@ install: build
 	docker-compose exec -u www-data php composer install
 
 	# Create database scheme
-	docker-compose exec -u www-data php php bin/console doctrine:migrations:diff
 	docker-compose exec -u www-data php php bin/console doctrine:migrations:migrate
 
 	# Configure Yarn storage
