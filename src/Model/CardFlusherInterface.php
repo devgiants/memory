@@ -16,7 +16,9 @@ interface CardFlusherInterface
 {
 
     /**
-     * @return array card array shuffled
+     * Shuffle the cards and get the result
+     *
+     * @return array cards array shuffled
      */
     public function shuffle(): array;
 }

@@ -13,11 +13,5 @@ use Doctrine\ORM\EntityRepository;
 
 class GameRepository extends EntityRepository
 {
-
-    public function findAllGames() {
-        $qb = $this->createQueryBuilder('g');
-
-//        $qb
-
-    }
+    // TODO use repository for custom data retrieval for database in further evolutions
 }

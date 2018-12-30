@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Used for bootstrapping necessary things for testing
+ */
+
 use Symfony\Component\Dotenv\Dotenv;
 
 require dirname(__DIR__).'/vendor/autoload.php';

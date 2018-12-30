@@ -8,7 +8,12 @@
 
 namespace Memory;
 
-
+/**
+ * Class GameStatuses
+ * Hold all game statuses
+ *
+ * @package Memory
+ */
 final class GameStatuses
 {
     /**

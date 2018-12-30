@@ -32,7 +32,7 @@ class Game
     protected $id;
 
     /**
-     * @var string game status
+     * @var string game status (must be a value from GameStatuses class)
      *
      * @ORM\Column(type="string", length=256)
      */
@@ -53,7 +53,7 @@ class Game
     protected $timeLeft;
 
     /**
-     * @var \DateTime $startDate
+     * @var \DateTime $startDatethe datetime where game starts
      *
      * @ORM\Column(type="datetime")
      */
@@ -67,11 +67,13 @@ class Game
      */
     public function __construct()
     {
+        // Init datetime when game instance is built
         $this->startDate = new \DateTime();
     }
 
     /**
-     * @return \DateTime
+     * Game start date getter
+     * @return \DateTime the start date
      */
     public function getStartDate(): \DateTime
     {
@@ -79,9 +81,10 @@ class Game
     }
 
     /**
-     * @param \DateTime $startDate
+     * Game start date setter
+     * @param \DateTime $startDate the start date to set for this game
      *
-     * @return Game
+     * @return Game the current game
      */
     public function setStartDate(\DateTime $startDate): Game
     {
@@ -91,7 +94,8 @@ class Game
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * Get the game UUID
+     * @return \Ramsey\Uuid\UuidInterface the game UUID
      */
     public function getId(): ?UuidInterface
     {
@@ -99,7 +103,8 @@ class Game
     }
 
     /**
-     * @return string
+     * Returns the game status
+     * @return string the game status
      */
     public function getStatus(): string
     {
@@ -107,9 +112,10 @@ class Game
     }
 
     /**
-     * @param string $status
+     * Set the game status
+     * @param string $status the game status to set
      *
-     * @return Game
+     * @return Game the current game
      */
     public function setStatus(string $status): Game
     {
@@ -119,7 +125,8 @@ class Game
     }
 
     /**
-     * @return int
+     * Returns the time left when game finished
+     * @return int the time left
      */
     public function getTimeLeft(): ?int
     {
@@ -127,9 +134,10 @@ class Game
     }
 
     /**
-     * @param int $timeLeft
+     * Set the time left when game finished
+     * @param int $timeLeft the time left
      *
-     * @return Game
+     * @return Game the current game
      */
     public function setTimeLeft(int $timeLeft): Game
     {
@@ -139,7 +147,8 @@ class Game
     }
 
     /**
-     * @return int
+     * Returns the time allowed for playing this game
+     * @return int the time allowed for playing this game
      */
     public function getTimeToFinish(): int
     {
@@ -147,7 +156,8 @@ class Game
     }
 
     /**
-     * @param int $timeToFinish
+     * Sets the time allowed for playing this game
+     * @param int $timeToFinish the time to finish allowed for this game
      *
      * @return Game
      */

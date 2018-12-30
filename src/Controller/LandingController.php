@@ -15,12 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class LandingController
+ * Handle actions for game arrival page
  *
  * @package App\Controller
  */
 class LandingController extends AbstractController
 {
     /**
+     * Index action to serve page with game features
      * @Route("/", name="app_index")
      * @return Response
      */

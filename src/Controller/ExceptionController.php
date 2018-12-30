@@ -12,15 +12,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+
 /**
+ * Class ExceptionController
  * Custom ExceptionController that renders to json
  *
  * Configure it like so:
-app.json_exception_controller:
-public: true
-class: App\Controller\ExceptionController
-arguments:
-- '@fos_rest.exception.codes_map'
+ *       app.json_exception_controller:
+ *          public: true
+ *          class: App\Controller\ExceptionController
+ *          arguments:
+ *             - '@fos_rest.exception.codes_map'
+ *
+ * @package App\Controller
  */
 class ExceptionController
 {
@@ -29,11 +33,18 @@ class ExceptionController
 	 */
 	private $exceptionCodes;
 
+    /**
+     * ExceptionController constructor.
+     *
+     * @param ExceptionValueMap $exceptionCodes
+     */
 	public function __construct(ExceptionValueMap $exceptionCodes) {
 		$this->exceptionCodes = $exceptionCodes;
 	}
+
+
 	/**
-	 * Converts an Exception to a Response.
+	 * Converts an Exception to a Response, with JSON format.
 	 *
 	 * @param Request                   $request
 	 * @param \Exception|\Throwable     $exception
@@ -55,6 +66,7 @@ class ExceptionController
 			['Content-type' => 'application/json']
 		);
 	}
+
 	/**
 	 * Determines the status code to use for the response.
 	 *

@@ -11,6 +11,12 @@ namespace App\Exception;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
 
+/**
+ * This exception must be thrown when an invalid status is given the game
+ * Class GameStatusException
+ *
+ * @package App\Exception
+ */
 class GameStatusException extends Exception
 {
 

@@ -20,28 +20,29 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Class GameHandler
+ * This class handles all actions around a game
  *
  * @package App\Handler
  */
 class GameHandler implements GameHandlerInterface
 {
     /**
-     * @var CardFlusherInterface $cardsFlusher
+     * @var CardFlusherInterface $cardsFlusher the card flushe object
      */
     protected $cardsFlusher;
 
     /**
-     * @var EntityManagerInterface $entityManager
+     * @var EntityManagerInterface $entityManager the entity manager used
      */
     protected $entityManager;
 
     /**
-     * @var int $timeToFinish
+     * @var int $timeToFinish the time to finish
      */
     protected $timeToFinish;
 
     /**
-     * @var \ReflectionClass
+     * @var \ReflectionClass Reflection class for manpulating constants
      */
     protected $gameStatusesClassReflection;
 
@@ -59,15 +60,18 @@ class GameHandler implements GameHandlerInterface
         EntityManagerInterface $entityManager,
         int $gameTime
     ) {
+        // Make assignations for attributes
         $this->cardsFlusher  = $cardsFlusher;
         $this->entityManager = $entityManager;
         $this->timeToFinish  = $gameTime;
 
+        // Create reflection class instance
         $this->gameStatusesClassReflection = new \ReflectionClass(GameStatuses::class);
     }
 
     /**
-     * @return int
+     * Get time to finish for handled games
+     * @return int the time to finish
      */
     public function getTimeToFinish(): int
     {
@@ -75,7 +79,8 @@ class GameHandler implements GameHandlerInterface
     }
 
     /**
-     * @return CardFlusherInterface
+     * Get the card flusher object
+     * @return CardFlusherInterface the card flusher object
      */
     public function getCardsFlusher(): CardFlusherInterface
     {
@@ -84,8 +89,9 @@ class GameHandler implements GameHandlerInterface
 
 
     /**
-     * @return Game
-     * @throws \Exception
+     * Creates a new game
+     * @return Game the created game
+     * @throws \Exception throwed if game persists fails
      */
     public function create(): Game
     {
@@ -100,8 +106,9 @@ class GameHandler implements GameHandlerInterface
     }
 
     /**
-     * @param Game $game
-     * @param string $serializedGameData
+     * Update a game with given data
+     * @param Game $game the game to update
+     * @param string $serializedGameData serialized data for game update
      *
      * @return Game
      */
@@ -112,9 +119,13 @@ class GameHandler implements GameHandlerInterface
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
+        // Loop to update data
         foreach ($gameData as $property => $data) {
+
+            //if propertyAccessor says it exists
             if ($propertyAccessor->isReadable($game, $property)) {
 
+                // Pre-checks
                 switch ($property) {
                     case 'status':
                         // Check if status is allowed
@@ -125,17 +136,20 @@ class GameHandler implements GameHandlerInterface
                         break;
                 }
 
+                // Final update
                 $propertyAccessor->setValue($game, $property, $data);
             }
         }
 
+        // Persists
         $this->entityManager->flush();
 
         return $game;
     }
 
     /**
-     * @return Game[]|array|object[]
+     * Returns all games from database
+     * @return Game[]|array|object[] the game ArrayCollection
      */
     public function getAllGames()
     {
@@ -145,9 +159,10 @@ class GameHandler implements GameHandlerInterface
     }
 
     /**
-     * @param Game $game
+     * Change game status if first access player quit before end
+     * @param Game $game the game concerned
      *
-     * @throws \Exception
+     * @throws \Exception if persist problem
      */
     public function handleLongTermStatus(Game $game)
     {
@@ -158,16 +173,17 @@ class GameHandler implements GameHandlerInterface
         if ($now > ($game->getStartDate()->add(new \DateInterval("PT{$game->getTimeToFinish()}S")))) {
             // Game is over without finish playing, it is lost
             $game->setStatus(GameStatuses::LOST);
+            // Lost by time, so 0 left
             $game->setTimeLeft(0);
             $this->entityManager->flush();
         }
     }
 
     /**
-     * @param UuidInterface $uuid
+     * @param UuidInterface $uuid the UUID game to find
      *
-     * @return Game
-     * @throws EntityNotFoundException
+     * @return Game the game found
+     * @throws EntityNotFoundException if no game found
      */
     protected function findGameByUuid(UuidInterface $uuid)
     {

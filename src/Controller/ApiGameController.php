@@ -21,6 +21,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
  * Class ApiGameController
+ * Handle all actions with Api
  *
  * @package App\Controller
  */
@@ -41,8 +42,8 @@ class ApiGameController extends FOSRestController
     public function updateGameStatus(Request $request, Game $game, GameHandlerInterface $gameHandler) : View
     {
         // TODO use another ParamConverter for array, not working so far.
-
         $game = $gameHandler->update($game, $request->getContent());
+
         // Return amended view for links purpose
         return $this->view(
             $game,

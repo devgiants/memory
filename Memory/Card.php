@@ -10,6 +10,7 @@ namespace Memory;
 
 /**
  * Class Card
+ * Represents a card from a business POV (framework-agnostic)
  *
  * @package Memory
  */
@@ -32,9 +33,9 @@ class Card
     }
 
     /**
-     * Retirn the card name
+     * Return the card name
      *
-     * @return string
+     * @return string the card name
      */
     public function getName(): string
     {

@@ -13,6 +13,7 @@ use Memory\Card;
 
 /**
  * Class CardFlusher
+ * This class brings necessary things to flush cards
  *
  * @package App\Game
  */
@@ -25,7 +26,7 @@ class CardFlusher implements CardFlusherInterface
     protected $initialCards;
 
     /**
-     * @var array $shuffledCards
+     * @var array $shuffledCards when cards are shuffled
      */
     protected $shuffledCards;
 
@@ -33,7 +34,7 @@ class CardFlusher implements CardFlusherInterface
     /**
      * CardFlusher constructor.
      *
-     * @param array $availableCards
+     * @param array $availableCards the given available cards
      */
     public function __construct(array $availableCards)
     {
@@ -42,13 +43,13 @@ class CardFlusher implements CardFlusherInterface
     }
 
     /**
-     * CardFlusher init.
+     * CardFlusher initialization
      */
     protected function init()
     {
         foreach ($this->initialCards as $initialCard) {
 
-            // Add 2 cards in deck
+            // Add 2 cards in deck,to allow pairs searching
             $this->shuffledCards[] = new Card($initialCard);
             $this->shuffledCards[] = new Card($initialCard);
         }
