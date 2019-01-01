@@ -12,12 +12,16 @@ namespace App\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
+ * Class GameRepository
  *
+ * @package App\Repository
  */
 class GameRepository extends EntityRepository
 {
+
     /**
      * Override findAll to add order by parameters
+     * @return array ALl games found
      */
     public function findAll()
     {
