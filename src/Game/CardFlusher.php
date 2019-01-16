@@ -9,7 +9,7 @@
 namespace App\Game;
 
 use App\Model\CardFlusherInterface;
-use Memory\Card;
+use Domain\Model\Card;
 
 /**
  * Class CardFlusher

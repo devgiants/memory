@@ -9,7 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Memory\GameStatuses;
+use Domain\GameStatuses;
 use Ramsey\Uuid\UuidInterface;
 
 

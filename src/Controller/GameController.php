@@ -10,7 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Model\GameHandlerInterface;
-use Memory\GameStatuses;
+use Domain\GameStatuses;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;

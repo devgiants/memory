@@ -6,7 +6,7 @@
  * Time: 16:18
  */
 
-namespace App\Handler;
+namespace Domain\Handler;
 
 use App\Entity\Game;
 use App\Exception\GameStatusException;
@@ -14,7 +14,7 @@ use App\Model\CardFlusherInterface;
 use App\Model\GameHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use Memory\GameStatuses;
+use Domain\GameStatuses;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 

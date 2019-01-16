@@ -6,7 +6,7 @@
  * Time: 18:34
  */
 
-namespace Memory;
+namespace Domain;
 
 /**
  * Class GameStatuses

@@ -57,7 +57,7 @@ services:
     # Needed for testing purpose
     app.game_handler:
         public: true
-        class: App\Handler\GameHandler
+        class: Domain\Handler\GameHandler
 
     # Used to allow autowiring on following custom exception controller
     FOS\RestBundle\Util\ExceptionValueMap: '@fos_rest.exception.codes_map'

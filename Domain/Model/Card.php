@@ -6,7 +6,7 @@
  * Time: 21:30
  */
 
-namespace Memory;
+namespace Domain\Model;
 
 /**
  * Class Card
