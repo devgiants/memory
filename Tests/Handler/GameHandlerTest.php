@@ -25,6 +25,11 @@ class GameHandlerTest extends WebTestCase
 {
 
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @var GameHandlerInterface
      */
     protected $gameHandler;
@@ -39,26 +44,20 @@ class GameHandlerTest extends WebTestCase
      */
     protected $timeToFinish;
 
-    /**
-     * GameHandlerTest constructor.
-     *
-     * @param string|null $name
-     * @param array $data
-     * @param string $dataName
-     */
-    public function __construct(?string $name = null, array $data = [], string $dataName = '')
+
+    protected function setUp()
     {
-        parent::__construct($name, $data, $dataName);
+        parent::setUp();
 
         // Get Kernel
         self::bootKernel();
-        $container = self::$kernel->getContainer();
+        $this->container = self::$kernel->getContainer();
 
         // Init gameHandler attribute
-        $this->gameHandler = $container->get('app.game_handler');
+        $this->gameHandler = $this->container->get('app.game_handler');
 //        $this->gameHandler = $this->createMock(GameHandler::class);
 
-        $this->timeToFinish = $container->getParameter('game_time');
+        $this->timeToFinish = $this->container->getParameter('game_time');
     }
 
     /**
@@ -99,5 +98,10 @@ class GameHandlerTest extends WebTestCase
         $timeToFinish = $this->gameHandler->getTimeToFinish();
 
         Assert::assertEquals($this->timeToFinish, $timeToFinish);
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
     }
 }
